@@ -7,7 +7,7 @@ _**Disclaimer: These markets are volatile and this bot just filters the new pool
 ## How to use
 Install the package
 ```
-pip install tokenpoolbot
+pip install -i https://test.pypi.org/simple/ tokenfinderbot
 ```
 
 Basic usage _(default settings)_
