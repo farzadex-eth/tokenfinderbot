@@ -4,3 +4,4 @@
 *.json
 /docs
 *.pyc
+/dist

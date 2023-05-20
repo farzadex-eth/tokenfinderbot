@@ -12,6 +12,8 @@ pip install tokenpoolbot
 
 Basic usage _(default settings)_
 ```python
+from tokenfinderbot.tokenfinderbot import TokenBot
+
 # bot instance
 bot = TokenBot()
 
@@ -21,6 +23,8 @@ bot.run()
 
 Advanced usage _(edit settings)_: See [Settings](#settings) Section
 ```python
+from tokenfinderbot.tokenfinderbot import TokenBot
+
 # bot instance
 bot = TokenBot()
 
