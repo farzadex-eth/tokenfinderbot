@@ -84,4 +84,4 @@ Bot settings:
 - **Telegram** _(settings.telegram)_: Telegram bot settings to get notifications on telegram:
   - **Notify** _(settings.telegram.notify)_: This should be _True_ in order to activate the telegram notifications. **(default: False)**
   - **Bot Token** _(settings.telegram.bot_token)_: Your telegram bot token **(default: "")**
-  - **Min. Liquidity** _(settings.telegram.chat_id)_: Your telegram chat id. The bot should be a member of this chat. it can be a private chat, group or channel **(default: "")**
+  - **Chat ID** _(settings.telegram.chat_id)_: Your telegram chat id. The bot should be a member of this chat. it can be a private chat, group or channel **(default: "")**
