@@ -1,4 +1,4 @@
-from tokenfinderbot.tokenpoolbot import TokenBot
+from tokenfinderbot.tokenfinderbot import TokenBot
 
 # bot instance
 bot = TokenBot()
