@@ -43,6 +43,28 @@ bot.set_settings(settings)
 bot.run()
 ```
 
+Notify on telegram _(You should have a telegram bot token and a chat id which the bot is a member)_
+```python
+from tokenfinderbot.tokenfinderbot import TokenBot
+
+# bot instance
+bot = TokenBot()
+
+# get bot settings
+settings = bot.get_settings()
+
+# change bot telegram settings
+settings.telegram.notify = True
+settings.telegram.bot_token = "YOUR TELEGRAM BOT TOKEN" # your telegram bot token
+settings.telegram.chat_id = "xxxxxxxxxx" # chat id for chat, group or channel which the bot is a memeber of
+
+# set new settings
+bot.set_settings(settings)
+
+# run with new settings
+bot.run()
+```
+
 ## Settings
 Bot settings:
 
@@ -58,3 +80,8 @@ Bot settings:
   - **Min. Liquidity** _(settings.liq_mc_filter.min_liq)_: The minimum accepted liquidity in USD **(default: 1000)**
 
 - **Update Interval** _(settings.update_interval)_: Time interval between each update of the database and calling APIs. Its unit is minutes **(default: 15)**
+
+- **Telegram** _(settings.telegram)_: Telegram bot settings to get notifications on telegram:
+  - **Notify** _(settings.telegram.notify)_: This should be _True_ in order to activate the telegram notifications. **(default: False)**
+  - **Bot Token** _(settings.telegram.bot_token)_: Your telegram bot token **(default: "")**
+  - **Min. Liquidity** _(settings.telegram.chat_id)_: Your telegram chat id. The bot should be a member of this chat. it can be a private chat, group or channel **(default: "")**
