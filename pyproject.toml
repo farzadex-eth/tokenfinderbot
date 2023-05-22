@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tokenfinderbot"
-version = "1.0.1"
+version = "1.0.2"
 description = "A simple bot for scanning new ERC-20 token pools created and filtering them based on the time created, liquidity and market cap"
 authors = ["Farzad Z <farzadex.eth@gmail.com>"]
 readme = "README.md"

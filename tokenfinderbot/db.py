@@ -85,3 +85,27 @@ class PoolDB:
 --------------------------------------------------------------
         """
         return info_str
+    
+    def get_pool_clean_str(self, address: str) -> str:
+        """Returns a string of summarized pool info without text colors
+
+        Args:
+            address (str): pool pair address
+
+        Returns:
+            str: pool info
+        """
+
+        pool = self.get_pool(address)
+        info_str = f"""\n--------------------------------------------------------------\n{pool['baseToken']['symbol']} / {pool['quoteToken']['symbol']}:
+Pair Address: {address}
+URL: {pool['url']}
+Price: 
+    {pool['priceNative']} {pool['quoteToken']['symbol']}
+    {pool['priceUsd']} USD
+Liquidity: {pool['liquidity']['usd']}
+Market Cap: {pool['fdv']}
+Created at: {datetime.utcfromtimestamp(int(pool['pairCreatedAt']/1000)).strftime('%Y-%m-%d %H:%M:%S')} UTC [{(datetime.now(tz=timezone.utc) - timedelta(seconds=pool['pairCreatedAt']/1000)).strftime('%H hour(s), %M minute(s) ago')}]
+--------------------------------------------------------------
+        """
+        return info_str

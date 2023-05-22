@@ -87,9 +87,8 @@ class TokenBot:
             for pair in filtered_pairs:
                 try:
                     pooldb.insert_pool(pair)
-                    pool_message = pooldb.get_pool_str(pair['pairAddress'])
-                    print(pool_message)
-                    self.notify_on_telegram(pool_message)
+                    print(pooldb.get_pool_str(pair['pairAddress']))
+                    self.notify_on_telegram(pooldb.get_pool_clean_str(pair['pairAddress']))
                     new_pairs_num += 1
                 except:
                     pass
@@ -111,7 +110,6 @@ class TokenBot:
             BaseException: Error in telegram communication
         """
         tsettings = self._settings.telegram
-        print(tsettings)
         if tsettings.notify and tsettings.bot_token != "" and tsettings.chat_id != "":
             try:
                 url = f'https://api.telegram.org/bot{tsettings.bot_token}/sendMessage?chat_id={tsettings.chat_id}&text={message}'
