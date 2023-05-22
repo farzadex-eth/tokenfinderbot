@@ -20,10 +20,17 @@ class TokenBot:
                 'min_liq': 1000,
                 'min_mc': 100000
             },
+            'telegram': {
+                'notify': False,
+                'bot_token': "",
+                'chat_id': ""
+            },
             'update_interval': 15,
             'db_name': 'db'
         }
         self._settings = DotMap(default_settings)
+        self._telegram_bot_token = ""
+        self._telegram_chat_id = 0
 
     def get_settings(self) -> DotMap:
         """Returns current bot settings
@@ -71,16 +78,18 @@ class TokenBot:
 
             # filter pools by liquidity and market cap
             filtered_pairs = filter_pools_by_liq_mc(pairs,
-                                                    mc_liq_ratio=self._settings.liq_mc_filter.mc_liq_ratio, min_mc=self._settings.liq_mc_filter.min_mc, 
+                                                    liq_mc_ratio=self._settings.liq_mc_filter.mc_liq_ratio, min_mc=self._settings.liq_mc_filter.min_mc, 
                                                     min_liq=self._settings.liq_mc_filter.min_liq)
             print("*** Filtered pools by liquidity and market cap")
 
-            # write filtered pools to database and print in terminal
+            # write filtered pools to database and print in terminal and send on telegram
             new_pairs_num = 0
             for pair in filtered_pairs:
                 try:
                     pooldb.insert_pool(pair)
-                    print(pooldb.get_pool_str(pair['pairAddress']))
+                    pool_message = pooldb.get_pool_str(pair['pairAddress'])
+                    print(pool_message)
+                    self.notify_on_telegram(pool_message)
                     new_pairs_num += 1
                 except:
                     pass
@@ -90,6 +99,26 @@ class TokenBot:
             print(e)
 
         print("************************************************")
+
+
+    def notify_on_telegram(self, message) -> None:
+        """Notify new pools on telegram
+
+        Args:
+            message (str): message
+
+        Raises:
+            BaseException: Error in telegram communication
+        """
+        tsettings = self._settings.telegram
+        print(tsettings)
+        if tsettings.notify and tsettings.bot_token != "" and tsettings.chat_id != "":
+            try:
+                url = f'https://api.telegram.org/bot{tsettings.bot_token}/sendMessage?chat_id={tsettings.chat_id}&text={message}'
+                response = requests.post(url)
+            except Exception as e:
+                raise BaseException(f"Telegram Error: {e}")
+            
 
     def run(self) -> None:
         """Runs the main function every x minutes
@@ -105,5 +134,6 @@ class TokenBot:
         # run the task every x minutes
         while True:
             run_pending()
+        
 
 
